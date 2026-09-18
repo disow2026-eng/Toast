@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Toast — Websites for Small Businesses</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:    #e8b96a;
+      --gold-lt: #f2cc90;
+      --bg:      #0f0e0d;
+      --bg-nav:  #131211;
+      --bg-feat: #0f0e0d;
+      --bg-foot: #141312;
+      --border:  #242220;
+      --white:   #ffffff;
+      --muted:   #9a9088;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ─────────────── NAV ─────────────── */
+    nav {
+      background: var(--bg-nav);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 52px;
+      height: 70px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .logo-wordmark {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 38px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      position: relative;
+      padding-bottom: 3px;
+      transition: color .18s;
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0; right: 0;
+      height: 2.5px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--gold);
+      color: #1a1207;
+      border: none;
+      border-radius: 100px;
+      padding: 11px 24px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .18s, transform .15s;
+      white-space: nowrap;
+    }
+
+    .btn:hover { background: var(--gold-lt); transform: translateY(-1px); }
+
+    /* ─────────────── HERO ─────────────── */
+    .hero {
+      display: flex;
+      align-items: center;
+      padding: 68px 52px 60px;
+      gap: 0;
+      min-height: 560px;
+      position: relative;
+    }
+
+    /* left */
+    .hero-copy {
+      flex: 0 0 480px;
+      max-width: 480px;
+    }
+
+    .eyebrow {
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 5px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .hero-h1 {
+      font-size: clamp(46px, 4.6vw, 66px);
+      font-weight: 900;
+      line-height: 1.04;
+      margin-bottom: 22px;
+      letter-spacing: -1px;
+    }
+
+    .hero-h1 .gold { color: var(--gold); }
+
+    .hero-p {
+      font-size: 15.5px;
+      line-height: 1.72;
+      color: var(--muted);
+      margin-bottom: 38px;
+      max-width: 390px;
+    }
+
+    .hero-btn {
+      font-size: 16px;
+      padding: 15px 34px;
+    }
+
+    /* right — device mockup stage */
+    .hero-devices {
+      flex: 1;
+      position: relative;
+      height: 480px;
+      margin-left: 24px;
+    }
+
+    /* ─── accent dashes ─── */
+    .dash {
+      position: absolute;
+      background: var(--gold);
+      border-radius: 4px;
+      opacity: .9;
+      pointer-events: none;
+    }
+
+    /* three dashes left of laptop */
+    .d1 { width: 30px; height: 7px; top: 180px; left: 50px;  transform: rotate(-38deg); }
+    .d2 { width: 20px; height: 5px; top: 210px; left: 36px;  transform: rotate(-38deg); opacity: .5; }
+    .d3 { width: 24px; height: 5px; top: 290px; left: 58px;  transform: rotate(-38deg); opacity: .7; }
+    /* two dashes right of phone */
+    .d4 { width: 26px; height: 6px; top: 80px;  right: 4px;  transform: rotate(-38deg); }
+    .d5 { width: 17px; height: 5px; top: 108px; right: 16px; transform: rotate(-38deg); opacity: .5; }
+
+    /* ─── LAPTOP ─── */
+    .laptop-wrap {
+      position: absolute;
+      left: 80px;
+      bottom: 0;
+      width: 580px;
+      z-index: 2;
+      filter: drop-shadow(0 28px 56px rgba(0,0,0,.75));
+    }
+
+    .laptop-lid {
+      background: #23201e;
+      border: 2.5px solid #3a3632;
+      border-bottom: none;
+      border-radius: 14px 14px 0 0;
+      padding: 9px 9px 0;
+    }
+
+    .laptop-cam-bar {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 6px;
+    }
+
+    .laptop-cam {
+      width: 5px; height: 5px;
+      background: #3a3632;
+      border-radius: 50%;
+    }
+
+    .laptop-screen {
+      border-radius: 6px;
+      overflow: hidden;
+      aspect-ratio: 16/10;
+      background: #1a1612;
+    }
+
+    .laptop-chin {
+      background: #2b2825;
+      height: 22px;
+      border-radius: 0 0 3px 3px;
+      border: 2.5px solid #3a3632;
+      border-top: none;
+    }
+
+    .laptop-base {
+      background: #232120;
+      height: 12px;
+      border-radius: 0 0 8px 8px;
+      margin: 0 2px;
+      position: relative;
+    }
+
+    .laptop-base::after {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 0; left: 14%; right: 14%;
+      height: 7px;
+      background: #1a1918;
+      border-radius: 0 0 8px 8px;
+    }
+
+    /* ── mini site inside laptop ── */
+    .ms {
+      width: 100%; height: 100%;
+      background: #1a1612;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .ms-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 14px;
+      border-bottom: 1px solid #2e2820;
+      flex-shrink: 0;
+    }
+
+    .ms-logo {
+      display: flex; align-items: center; gap: 4px;
+      font-size: 8.5px; font-weight: 800; color: var(--gold);
+    }
+
+    .ms-links {
+      display: flex; gap: 10px; list-style: none;
+      font-size: 6px; color: #ccc;
+    }
+
+    .ms-cta {
+      background: var(--gold); color: #1a0f00;
+      font-size: 5.5px; font-weight: 700;
+      border-radius: 20px; padding: 2.5px 7px;
+    }
+
+    .ms-hero {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* cafe interior approximation */
+    .ms-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 55% 70% at 72% 50%,
+          rgba(160,90,20,.30) 0%, transparent 70%),
+        linear-gradient(115deg, #1a1208 0%, #14100a 45%, #0d0906 100%);
+    }
+
+    /* fake warm-light wall / brick */
+    .ms-bg::before {
+      content: '';
+      position: absolute; right: 8%; top: 0; bottom: 0; width: 52%;
+      background:
+        repeating-linear-gradient(0deg,
+          transparent 0, transparent 7px,
+          rgba(80,45,10,.18) 7px, rgba(80,45,10,.18) 8px),
+        repeating-linear-gradient(90deg,
+          transparent 0, transparent 14px,
+          rgba(80,45,10,.12) 14px, rgba(80,45,10,.12) 15px);
+      border-radius: 3px;
+    }
+
+    /* warm glow blob */
+    .ms-bg::after {
+      content: '';
+      position: absolute; right: 12%; top: 20%;
+      width: 40%; height: 60%;
+      background: radial-gradient(ellipse,
+        rgba(200,110,30,.22) 0%, transparent 70%);
+    }
+
+    .ms-text {
+      position: absolute;
+      left: 12px; top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+    }
+
+    .ms-text h2 {
+      font-size: 13.5px; font-weight: 900;
+      line-height: 1.1; color: #fff;
+      margin-bottom: 5px;
+    }
+
+    .ms-text p {
+      font-size: 5px; color: #b0a898;
+      line-height: 1.6; max-width: 95px;
+      margin-bottom: 8px;
+    }
+
+    .ms-text .ms-btn {
+      display: inline-flex; align-items: center; gap: 3px;
+      background: var(--gold); color: #1a0f00;
+      font-size: 5px; font-weight: 700;
+      border-radius: 20px; padding: 2.5px 7px;
+    }
+
+    .ms-bar {
+      display: flex; justify-content: space-around;
+      padding: 7px 14px;
+      border-top: 1px solid #2e2820;
+      flex-shrink: 0;
+    }
+
+    .ms-bar-item {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 2px;
+    }
+
+    .ms-bar-item .icon { font-size: 9px; }
+    .ms-bar-item .label { font-size: 4.5px; color: #9a9088; }
+
+    /* ─── PHONE ─── */
+    .phone-wrap {
+      position: absolute;
+      right: 20px;
+      bottom: 24px;
+      width: 148px;
+      z-index: 3;
+      filter: drop-shadow(0 22px 44px rgba(0,0,0,.7));
+    }
+
+    .phone-shell {
+      background: #1e1c1a;
+      border: 2.5px solid #3a3632;
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    .phone-notch-bar {
+      background: #1e1c1a;
+      height: 10px;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      padding-bottom: 1px;
+    }
+
+    .phone-notch {
+      width: 48px; height: 6px;
+      background: #141312;
+      border-radius: 0 0 8px 8px;
+    }
+
+    .phone-screen {
+      background: #1a1612;
+      min-height: 230px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ph-nav {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 6px 10px;
+      border-bottom: 1px solid #2e2820;
+      flex-shrink: 0;
+    }
+
+    .ph-logo {
+      font-size: 7px; font-weight: 800; color: var(--gold);
+      display: flex; align-items: center; gap: 3px;
+    }
+
+    .hamburger { display: flex; flex-direction: column; gap: 2px; }
+    .hamburger span {
+      display: block; width: 11px; height: 1.5px;
+      background: #ccc; border-radius: 2px;
+    }
+
+    .ph-hero {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      min-height: 165px;
+    }
+
+    .ph-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 75% 50%,
+          rgba(160,90,20,.28) 0%, transparent 70%),
+        linear-gradient(115deg, #1a1208 0%, #14100a 45%, #0d0906 100%);
+    }
+
+    .ph-bg::after {
+      content: '';
+      position: absolute; right: 0; top: 0; bottom: 0; width: 42%;
+      background: linear-gradient(to left,
+        rgba(180,100,25,.18), transparent);
+    }
+
+    .ph-text {
+      position: absolute;
+      left: 10px; top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+    }
+
+    .ph-text h3 {
+      font-size: 11px; font-weight: 900;
+      line-height: 1.12; color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .ph-text p {
+      font-size: 4px; color: #b0a898;
+      line-height: 1.6; max-width: 70px;
+      margin-bottom: 7px;
+    }
+
+    .ph-text .ph-btn {
+      display: inline-block;
+      background: var(--gold); color: #1a0f00;
+      font-size: 4.5px; font-weight: 700;
+      border-radius: 20px; padding: 2px 7px;
+    }
+
+    /* bottom strip of phone showing cafe photo */
+    .ph-img-strip {
+      height: 54px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ph-img-strip-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 100% at 50% 30%,
+          rgba(130,80,20,.35) 0%, transparent 80%),
+        linear-gradient(180deg, #1a1208 0%, #0d0804 100%);
+    }
+
+    .ph-img-strip-bg::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        repeating-linear-gradient(0deg,
+          transparent 0, transparent 5px,
+          rgba(80,45,10,.15) 5px, rgba(80,45,10,.15) 6px);
+    }
+
+    .ph-home-bar {
+      height: 4px;
+      background: #1e1c1a;
+      display: flex; justify-content: center; align-items: center;
+    }
+
+    .ph-home-indicator {
+      width: 36px; height: 2px;
+      background: #4a4642; border-radius: 2px;
+    }
+
+    /* ─────────────── FEATURES ─────────────── */
+    .features {
+      display: flex;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-feat);
+    }
+
+    .feat {
+      flex: 1;
+      padding: 44px 40px 44px;
+      border-right: 1px solid var(--border);
+    }
+
+    .feat:last-child { border-right: none; }
+
+    .feat-icon {
+      width: 34px; height: 34px;
+      color: var(--gold);
+      margin-bottom: 18px;
+      display: block;
+    }
+
+    .feat h3 {
+      font-size: 17.5px; font-weight: 800;
+      margin-bottom: 7px; color: var(--white);
+    }
+
+    .feat p {
+      font-size: 13.5px; color: var(--muted); line-height: 1.65;
+    }
+
+    /* ─────────────── FOOTER ─────────────── */
+    footer {
+      background: var(--bg-foot);
+      padding: 54px 52px 50px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .foot-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .foot-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .foot-wordmark {
+      font-size: 40px; font-weight: 900;
+      color: var(--gold); letter-spacing: -1px;
+    }
+
+    .foot-sub {
+      font-size: 10.5px; font-weight: 600;
+      letter-spacing: 4.5px; color: var(--muted);
+      text-transform: uppercase;
+      margin-left: 2px;
+    }
+
+    .foot-divider {
+      width: 1px; height: 104px;
+      background: #2e2c2a;
+      margin: 0 52px;
+      flex-shrink: 0;
+    }
+
+    .foot-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .c-item {
+      display: flex; align-items: center;
+      gap: 14px; font-size: 15px; color: var(--white);
+    }
+
+    .c-item svg { color: var(--gold); flex-shrink: 0; }
+
+    .foot-tagline {
+      font-family: 'Dancing Script', cursive;
+      font-size: 33px; font-weight: 700;
+      color: var(--gold);
+      margin-left: auto;
+      padding-left: 48px;
+      line-height: 1.25;
+      text-align: center;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* wave decorations */
+    .wave {
+      position: absolute;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .wave-l { left: 0; }
+    .wave-r { right: 0; }
+
+    /* ─────────────── RESPONSIVE ─────────────── */
+    @media (max-width: 1024px) {
+      .hero { padding: 48px 28px; }
+      nav { padding: 0 28px; }
+      .hero-copy { flex: 0 0 380px; max-width: 380px; }
+      .laptop-wrap { width: 460px; left: 40px; }
+    }
+
+    @media (max-width: 820px) {
+      .nav-links { display: none; }
+      nav { padding: 0 20px; }
+      .hero { flex-direction: column; padding: 40px 20px; min-height: auto; }
+      .hero-copy { flex: none; max-width: 100%; }
+      .hero-devices { width: 100%; margin-left: 0; height: 360px; }
+      .laptop-wrap { left: 0; width: 100%; max-width: 420px; }
+      .phone-wrap { right: 0; }
+      footer { flex-wrap: wrap; gap: 28px; padding: 40px 20px; }
+      .foot-divider { display: none; }
+      .foot-tagline { margin-left: 0; padding-left: 0; }
+      .features { flex-wrap: wrap; }
+      .feat { min-width: 50%; border-right: none; border-bottom: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════ NAV ═══════════════════════ -->
+<nav>
+  <a href="#" class="logo">
+    <!-- Toast bread SVG icon -->
+    <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- bread body -->
+      <rect x="5" y="13" width="34" height="25" rx="9" fill="#e8b96a"/>
+      <!-- inner dark face area -->
+      <rect x="9" y="17" width="26" height="17" rx="6" fill="#131211"/>
+      <!-- top crust arch -->
+      <path d="M10 17 Q22 4 34 17" fill="#e8b96a"/>
+      <!-- eyes -->
+      <circle cx="16.5" cy="23" r="2.2" fill="#e8b96a"/>
+      <circle cx="27.5" cy="23" r="2.2" fill="#e8b96a"/>
+      <!-- smile -->
+      <path d="M16 28.5 Q22 33 28 28.5" stroke="#e8b96a" stroke-width="2" stroke-linecap="round" fill="none"/>
+    </svg>
+    <span class="logo-wordmark">toast</span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#" class="active">Home</a></li>
+    <li><a href="#">Services</a></li>
+    <li><a href="#">Portfolio</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+
+  <a href="#" class="btn">Get Started &nbsp;&#8594;</a>
+</nav>
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section class="hero">
+
+  <!-- LEFT COPY -->
+  <div class="hero-copy">
+    <p class="eyebrow">Websites for Small Businesses</p>
+    <h1 class="hero-h1">
+      Modern websites.<br>
+      <span class="gold">Real growth.</span>
+    </h1>
+    <p class="hero-p">
+      We build fast, clean, and affordable websites<br>
+      for small businesses. Get online, look professional,<br>
+      and attract more customers.
+    </p>
+    <a href="#" class="btn hero-btn">Get Started &nbsp;&#8594;</a>
+  </div>
+
+  <!-- RIGHT DEVICES -->
+  <div class="hero-devices">
+
+    <!-- accent dashes -->
+    <div class="dash d1"></div>
+    <div class="dash d2"></div>
+    <div class="dash d3"></div>
+    <div class="dash d4"></div>
+    <div class="dash d5"></div>
+
+    <!-- LAPTOP -->
+    <div class="laptop-wrap">
+      <div class="laptop-lid">
+        <div class="laptop-cam-bar"><div class="laptop-cam"></div></div>
+        <div class="laptop-screen">
+          <!-- mini site -->
+          <div class="ms">
+            <div class="ms-nav">
+              <div class="ms-logo">
+                <svg width="11" height="11" viewBox="0 0 44 44" fill="none">
+                  <rect x="5" y="13" width="34" height="25" rx="9" fill="#e8b96a"/>
+                  <rect x="9" y="17" width="26" height="17" rx="6" fill="#1a1612"/>
+                  <path d="M10 17 Q22 4 34 17" fill="#e8b96a"/>
+                  <circle cx="16.5" cy="23" r="2.2" fill="#e8b96a"/>
+                  <circle cx="27.5" cy="23" r="2.2" fill="#e8b96a"/>
+                  <path d="M16 28.5 Q22 33 28 28.5" stroke="#e8b96a" stroke-width="2" stroke-linecap="round" fill="none"/>
+                </svg>
+                Riverside Café
+              </div>
+              <ul class="ms-links">
+                <li>Home</li><li>Menu</li><li>About</li><li>Contact</li>
+              </ul>
+              <div class="ms-cta">Order Now</div>
+            </div>
+            <div class="ms-hero">
+              <div class="ms-bg"></div>
+              <div class="ms-text">
+                <h2>Good Food.<br>Great Vibes.</h2>
+                <p>Fresh coffee, delicious food, and a cozy place to be.</p>
+                <span class="ms-btn">View Menu &#8594;</span>
+              </div>
+            </div>
+            <div class="ms-bar">
+              <div class="ms-bar-item">
+                <span class="icon">&#9749;</span>
+                <span class="label">Fresh Coffee</span>
+              </div>
+              <div class="ms-bar-item">
+                <span class="icon">&#127869;</span>
+                <span class="label">Quality Food</span>
+              </div>
+              <div class="ms-bar-item">
+                <span class="icon">&#129309;</span>
+                <span class="label">Local &amp; Friendly</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="laptop-chin"></div>
+      <div class="laptop-base"></div>
+    </div>
+
+    <!-- PHONE -->
+    <div class="phone-wrap">
+      <div class="phone-shell">
+        <div class="phone-notch-bar">
+          <div class="phone-notch"></div>
+        </div>
+        <div class="phone-screen">
+          <div class="ph-nav">
+            <div class="ph-logo">
+              <svg width="9" height="9" viewBox="0 0 44 44" fill="none">
+                <rect x="5" y="13" width="34" height="25" rx="9" fill="#e8b96a"/>
+                <rect x="9" y="17" width="26" height="17" rx="6" fill="#1a1612"/>
+                <path d="M10 17 Q22 4 34 17" fill="#e8b96a"/>
+                <circle cx="16.5" cy="23" r="2.2" fill="#e8b96a"/>
+                <circle cx="27.5" cy="23" r="2.2" fill="#e8b96a"/>
+                <path d="M16 28.5 Q22 33 28 28.5" stroke="#e8b96a" stroke-width="2" stroke-linecap="round" fill="none"/>
+              </svg>
+              Riverside Café
+            </div>
+            <div class="hamburger">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="ph-hero">
+            <div class="ph-bg"></div>
+            <div class="ph-text">
+              <h3>Good Food.<br>Great Vibes.</h3>
+              <p>Fresh coffee, delicious food, and a cozy place to be.</p>
+              <span class="ph-btn">View Menu &#8594;</span>
+            </div>
+          </div>
+          <div class="ph-img-strip">
+            <div class="ph-img-strip-bg"></div>
+          </div>
+        </div>
+        <div class="ph-home-bar">
+          <div class="ph-home-indicator"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /hero-devices -->
+</section>
+
+<!-- ═══════════════════════ FEATURES ═══════════════════════ -->
+<div class="features">
+
+  <div class="feat">
+    <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="3" width="20" height="14" rx="2.5"/>
+      <line x1="8" y1="21" x2="16" y2="21"/>
+      <line x1="12" y1="17" x2="12" y2="21"/>
+    </svg>
+    <h3>Custom Websites</h3>
+    <p>Unique designs tailored<br>to your brand.</p>
+  </div>
+
+  <div class="feat">
+    <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="5" y="2" width="14" height="20" rx="3.5"/>
+      <circle cx="12" cy="18" r="0.5" fill="currentColor"/>
+    </svg>
+    <h3>Mobile Friendly</h3>
+    <p>Looks great on every<br>device.</p>
+  </div>
+
+  <div class="feat">
+    <!-- lightning bolt -->
+    <svg class="feat-icon" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+      <path d="M13 2 L4 14 H11 L11 22 L20 10 H13 Z"/>
+    </svg>
+    <h3>Fast &amp; Reliable</h3>
+    <p>Built for speed and<br>performance.</p>
+  </div>
+
+  <div class="feat">
+    <!-- 4-pointed star -->
+    <svg class="feat-icon" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+      <path d="M12 2
+               C12 2 12.9 8.1 14.6 9.4
+               C16.3 10.7 22 12 22 12
+               C22 12 16.3 13.3 14.6 14.6
+               C12.9 15.9 12 22 12 22
+               C12 22 11.1 15.9 9.4 14.6
+               C7.7 13.3 2 12 2 12
+               C2 12 7.7 10.7 9.4 9.4
+               C11.1 8.1 12 2 12 2Z"/>
+    </svg>
+    <h3>Built for Your Business</h3>
+    <p>Simple, effective, and<br>ready to grow.</p>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer>
+
+  <!-- left wave -->
+  <svg class="wave wave-l" width="240" height="130" viewBox="0 0 240 130" fill="none">
+    <path d="M0 130 Q30 70 65 95 Q100 120 135 72 Q170 24 210 58 L240 46 L240 130 Z"
+          fill="none" stroke="#e8b96a" stroke-width="2" opacity="0.28"/>
+    <path d="M-10 118 Q35 55 75 82 Q115 109 155 58 Q185 20 230 48"
+          fill="none" stroke="#e8b96a" stroke-width="1.5" opacity="0.14"/>
+  </svg>
+
+  <div class="foot-logo">
+    <div class="foot-logo-row">
+      <!-- larger toast icon for footer -->
+      <svg width="66" height="66" viewBox="0 0 44 44" fill="none">
+        <rect x="5" y="13" width="34" height="25" rx="9" fill="#e8b96a"/>
+        <rect x="9" y="17" width="26" height="17" rx="6" fill="#141312"/>
+        <path d="M10 17 Q22 4 34 17" fill="#e8b96a"/>
+        <circle cx="16.5" cy="23" r="2.2" fill="#e8b96a"/>
+        <circle cx="27.5" cy="23" r="2.2" fill="#e8b96a"/>
+        <path d="M16 28.5 Q22 33 28 28.5" stroke="#e8b96a" stroke-width="2" stroke-linecap="round" fill="none"/>
+      </svg>
+      <span class="foot-wordmark">toast</span>
+    </div>
+    <span class="foot-sub">Websites for Small Businesses</span>
+  </div>
+
+  <div class="foot-divider"></div>
+
+  <div class="foot-contact">
+    <div class="c-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07
+                 A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67
+                 A2 2 0 012.18 0h3a2 2 0 012 1.72
+                 c.127.96.361 1.903.7 2.81
+                 a2 2 0 01-.45 2.11L6.91 7.91
+                 a16 16 0 006.16 6.16l1.27-1.27
+                 a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7
+                 A2 2 0 0122 14.92v2z"/>
+      </svg>
+      502 880 4037
+    </div>
+    <div class="c-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+        <polyline points="22,6 12,13 2,6"/>
+      </svg>
+      toast@yourbrand.com
+    </div>
+    <div class="c-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+        <circle cx="12" cy="10" r="3"/>
+      </svg>
+      Louisville, KY
+    </div>
+  </div>
+
+  <div class="foot-tagline">
+    Let's build<br>something great.
+  </div>
+
+  <!-- right wave -->
+  <svg class="wave wave-r" width="240" height="130" viewBox="0 0 240 130" fill="none">
+    <path d="M240 130 Q210 70 175 95 Q140 120 105 72 Q70 24 30 58 L0 46 L0 130 Z"
+          fill="none" stroke="#e8b96a" stroke-width="2" opacity="0.28"/>
+    <path d="M250 118 Q205 55 165 82 Q125 109 85 58 Q55 20 10 48"
+          fill="none" stroke="#e8b96a" stroke-width="1.5" opacity="0.14"/>
+  </svg>
+
+</footer>
+
+</body>
+</html>
